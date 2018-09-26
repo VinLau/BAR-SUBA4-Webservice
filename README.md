@@ -79,23 +79,16 @@ API ReadMe template credits: https://gist.github.com/iros/3426278
 * **Sample Call:**
   
   ```javascript
-  var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "https://bar.utoronto.ca/~vlau/testing_suba4.php",
-  "method": "POST",
-  "headers": {
-    "Content-Type": "application/json",
-    "Cache-Control": "no-cache",
-    "Postman-Token": "ab2bb38f-dea7-b041-be55-948e3509ae9b"
-  },
-  "processData": false,
-  "data": "{"AGI_IDs": ["AT2G34970", "AT4G02640"], "include_predicted": true}"
-  }
-
-  $.ajax(settings).done(function (response) {
-    console.log(response);
-  });
+  fetch(
+    'https://bar.utoronto.ca/~vlau/testing_suba4.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+  			"AGI_IDs": ["At1g01020","At1g01030"],
+  		  "include_predicted": true})
+    })
+    .then(res => res.json())
+    .then(console.log);
   ```
 
 * **Notes:**
