@@ -156,7 +156,7 @@ function main(){
 		# Prefill the resJSON with arrays that will hold default data, this will also be useful when
 		# there is no SUBA4 data returned for a certain AGI such that it can be easily iterated by API user
 		foreach($decodedData['AGI_IDs'] as $gene) {
-			$resJSON[ucfirst(strtolower($gene))] = array(
+			$resJSON[str_replace(array('a','c','m'), array('A','C','M'),(strtolower($gene)))] = array(
 				'includes_predicted' => "no",  # Default, we'll verify below
 				"includes_experimental" => "no", # Default, we'll verify below
 				"data" => array() # Inner array to store localization data
@@ -166,8 +166,7 @@ function main(){
 		# Let us process the MySQL data row by row
 		while( $row = mysqli_fetch_assoc($result) ) {
 
-			$id = ucfirst(strtolower(substr($row['gene_id'], 0, -2))); # Format id in JSON to become 'At2g10000', chop '.1' from AGI ID
-
+			$id = str_replace(array('a','c','m'), array('A','C','M'),strtolower(substr($row['gene_id'], 0, -2))); # Format id in JSON to become 'At2g10000', chop '.1' from AGI ID, C and M need caps; capitalize first A.
 			if($decodedData['include_predicted']) { # Run this code only if POST req field was set T
 				foreach($predMatches as $predField) { # Iterate through every predicted column in this return row
 					$predColLocs = $row[$predField]; # NB: this is a string
